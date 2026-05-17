@@ -5,3 +5,6 @@ profile.jpg
 # OS
 .DS_Store
 Thumbs.db
+
+# Claude Code internals
+.claude/
