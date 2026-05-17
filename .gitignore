@@ -1,0 +1,7 @@
+# Source / raw files — not needed on the live site
+profile.jpg
+*.pdf
+
+# OS
+.DS_Store
+Thumbs.db

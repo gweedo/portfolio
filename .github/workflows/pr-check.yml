@@ -1,0 +1,25 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          echo "Checking required files..."
+          test -f index.html      && echo "✓ index.html" || (echo "✗ index.html missing" && exit 1)
+          test -f profile_face.jpg && echo "✓ profile_face.jpg" || (echo "✗ profile_face.jpg missing" && exit 1)
+          echo "All checks passed."
+
+      - name: Check HTML is not empty
+        run: |
+          size=$(wc -c < index.html)
+          echo "index.html size: ${size} bytes"
+          [ "$size" -gt 1000 ] && echo "✓ HTML looks healthy" || (echo "✗ HTML suspiciously small" && exit 1)
