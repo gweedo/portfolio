@@ -11,15 +11,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check required files
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check required source files
         run: |
           echo "Checking required files..."
-          test -f index.html      && echo "✓ index.html" || (echo "✗ index.html missing" && exit 1)
-          test -f profile_face.jpg && echo "✓ profile_face.jpg" || (echo "✗ profile_face.jpg missing" && exit 1)
-          echo "All checks passed."
+          test -f index.html            && echo "✓ index.html" || (echo "✗ index.html missing" && exit 1)
+          test -f public/profile_face.jpg && echo "✓ public/profile_face.jpg" || (echo "✗ public/profile_face.jpg missing" && exit 1)
+          test -f src/App.tsx           && echo "✓ src/App.tsx" || (echo "✗ src/App.tsx missing" && exit 1)
+          test -f package.json          && echo "✓ package.json" || (echo "✗ package.json missing" && exit 1)
+          echo "All file checks passed."
 
-      - name: Check HTML is not empty
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Check build output
         run: |
-          size=$(wc -c < index.html)
-          echo "index.html size: ${size} bytes"
-          [ "$size" -gt 1000 ] && echo "✓ HTML looks healthy" || (echo "✗ HTML suspiciously small" && exit 1)
+          echo "Checking dist output..."
+          test -f dist/index.html && echo "✓ dist/index.html" || (echo "✗ dist/index.html missing" && exit 1)
+          js=$(find dist/assets -name "*.js" | head -1)
+          [ -n "$js" ] && echo "✓ JS bundle: $js" || (echo "✗ No JS bundle in dist/assets" && exit 1)
+          size=$(wc -c < "$js")
+          echo "JS bundle size: ${size} bytes"
+          [ "$size" -gt 10000 ] && echo "✓ Bundle looks healthy" || (echo "✗ Bundle suspiciously small" && exit 1)
