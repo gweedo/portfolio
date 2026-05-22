@@ -13,7 +13,8 @@
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "bradlc.vscode-tailwindcss",
-        "Vue.volar"
+        "Vue.volar",
+        "anthropic.claude-code"
       ],
       "settings": {
         "editor.formatOnSave": true,
