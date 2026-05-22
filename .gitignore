@@ -7,6 +7,16 @@ node_modules/
 dist/
 *.local
 
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+# Local env files (Vite)
+.env
+.env.*.local
+
+# Test coverage
+coverage/
+
 # Editor / OS
 .DS_Store
 Thumbs.db
@@ -22,6 +32,9 @@ pnpm-debug.log*
 # Claude Code internals
 .claude/
 /plan
+
+# Devcontainer
+.devcontainer/
 
 # Legacy bundle kept locally for content extraction; do NOT ship
 index.legacy.html
