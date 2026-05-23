@@ -6,6 +6,7 @@ profile.jpg
 node_modules/
 dist/
 *.local
+*.tsbuildinfo
 
 # TypeScript incremental build cache
 *.tsbuildinfo
@@ -22,6 +23,7 @@ coverage/
 Thumbs.db
 .vscode/*
 !.vscode/extensions.json
+.devcontainer
 
 # Logs
 npm-debug.log*
